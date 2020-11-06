@@ -30,9 +30,11 @@ RSpec.describe 'Task', type: :system do
 
   describe 'Task新規作成' do
     context '正常系' do
+      let(:project) { create(:project) }
+      let(:task) { create(:task, project_id: project.id) }
+
       it 'Taskが新規作成されること' do
         # TODO: ローカル変数ではなく let を使用してください
-        project = FactoryBot.create(:project)
         visit project_tasks_path(project)
         click_link 'New Task'
         fill_in 'Title', with: 'test'
