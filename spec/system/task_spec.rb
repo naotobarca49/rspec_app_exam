@@ -72,10 +72,10 @@ RSpec.describe 'Task', type: :system do
         project = create(:project)
         task = create(:task, project_id: project.id)
         visit edit_project_task_path(project, task)
-        fill_in 'Deadline', with: Time.current
+        fill_in 'Deadline', with: task.deadline.strftime("%-m/%d %-H:%M")
         click_button 'Update Task'
         click_link 'Back'
-        expect(page).to have_content(Time.current.strftime('%m/%d'))
+        expect(find('.task_list')).to have_content(task.deadline.strftime("%-m/%d %-H:%M"))
         expect(current_path).to eq project_tasks_path(project)
       end
 
