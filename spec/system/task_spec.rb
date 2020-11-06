@@ -58,15 +58,15 @@ RSpec.describe 'Task', type: :system do
 
   describe 'Task編集' do
     context '正常系' do
-      it 'Taskを編集した場合、一覧画面で編集後の内容が表示されること' do
+      fit 'Taskを編集した場合、一覧画面で編集後の内容が表示されること' do
         # FIXME: テストが失敗するので修正してください
         project = create(:project)
         task = create(:task, project_id: project.id)
         visit edit_project_task_path(project, task)
-        fill_in 'Deadline', with: task.deadline.strftime("%-m/%d %-H:%M")
+        fill_in 'Deadline', with: Time.current
         click_button 'Update Task'
         click_link 'Back'
-        expect(find('.task_list')).to have_content(task.deadline.strftime("%-m/%d %-H:%M"))
+        expect(find('.task_list')).to have_content(short_time(Time.current))
         expect(current_path).to eq project_tasks_path(project)
       end
 
