@@ -3,10 +3,11 @@ require 'rails_helper'
 RSpec.describe 'Task', type: :system do
   describe 'Task一覧' do
     context '正常系' do
+      let(:task) { create(:task, project_id: project.id) }
+      let(:project) { create(:project) }
+
       it '一覧ページにアクセスした場合、Taskが表示されること' do
         # TODO: ローカル変数ではなく let を使用してください
-        project = FactoryBot.create(:project)
-        task = FactoryBot.create(:task, project_id: project.id)
         visit project_tasks_path(project)
         expect(page).to have_content task.title
         expect(Task.count).to eq 1
